@@ -9,6 +9,7 @@ const passport = require("passport");
 const initializePassport = require("../config/passport");
 initializePassport(passport);
 
+//load pages - sign in and sign up
 router.get("/signin", (req, res) => {
   res.render("users/signin", {
     layout: "main",
@@ -21,6 +22,7 @@ router.get("/signup", (req, res) => {
   });
 });
 
+//create account
 router.post("/signup", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -40,6 +42,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+//log in with existing account
 router.post(
   "/signin",
   passport.authenticate("local", {

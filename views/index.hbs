@@ -1,8 +1,12 @@
  {{#if user}}
-<div>
-    <p class="text-white">You have been logged as:  {{user.email}} </p>
+<div  class="text-white">
+    <p >You have been logged as:  {{user.email}} </p>
+    <p>I have created a special Id for you. It is {{user.charId}}. Check Here info to see that means! Create a new account if you want, see what happens. 
+    </p>
 </div>
 {{/if}}
+{{#unless user}}
 <div>
     <p class="text-white">"If no mistake you have made, losing you are.  A different game you should play"</p>
 </div>
+{{/unless}}

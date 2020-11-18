@@ -40,3 +40,8 @@ nav {
 .ml-auto {
   margin-right: 0%;
 }
+/* letter edges- to use anywhere */
+.letter-edges {
+  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+  font-size: 1.1srem;
+}

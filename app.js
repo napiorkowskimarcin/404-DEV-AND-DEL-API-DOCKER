@@ -59,7 +59,7 @@ app.use(session({ secret: "asasa", resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-//to have acces to account on all of the views.
+//to have acces to user data on all of the views.
 app.use((req, res, next) => {
   res.locals.login = req.isAuthenticated();
   res.locals.user = req.user;
@@ -70,6 +70,7 @@ app.use((req, res, next) => {
 //routes
 app.use("/user", require("./routes/user"));
 app.use("/hero", require("./routes/hero"));
+app.use("/species", require("./routes/species"));
 app.use("/", require("./routes/index"));
 
 //start listening
