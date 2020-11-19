@@ -31,10 +31,14 @@
       {{else}}
       <td class="text-danger">This hero has no vehicle, feeling sorry for him!</td>
       {{/if}}
-    </tr>
-    <tr> --}}
+    </tr> --}}
+    <tr>
       <td>Starships</td>
-      <td>{{hero.starships}}</td>
+      <td>
+        {{#each dataStarships}}
+        <a href="#" class="text-white">{{this.model}}</a>
+        {{/each}}
+      </td>
     </tr>
     <tr>
       <td>Planets</td>
@@ -42,7 +46,12 @@
     </tr>
     <tr>
       <td>Movies</td>
-      <td>{{hero.films}}</td>
+      <td>
+        {{#each dataMovie}}
+        <a href="#" class="text-white">{{this.title}}</a>
+        {{/each}}
+
+      </td>
     </tr>
   </tbody>
 </table>

@@ -10,7 +10,6 @@ router.get("/:id", async (req, res) => {
       `https://swapi.dev/api/species/${req.params.id}/`
     );
     species = species.data;
-    console.log(species);
     res.render("hero/species/species", {
       layout: "main",
       species,

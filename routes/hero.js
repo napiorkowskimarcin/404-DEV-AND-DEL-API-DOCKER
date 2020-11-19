@@ -14,16 +14,17 @@ router.get("/:id", async (req, res) => {
     );
     //KEEP ONLY DATA FROM HERO:
     hero = hero.data;
-
+    //CREATE ARRAY OF INDEXES OF MOVIES AND DATA TO PASS----------------------------------------------------MOVIES
     //PASSING MOVIES FOR THE HERO.HBS
     let movies = hero.films;
 
-    //CREATE ARRAY OF INDEXES OF MOVIES
     //step1 - leave numbers only - to pass to it to the page.
-    let movieNumArr = movies.map((item) => item.substr(item.length - 2));
+    let movieNumArr = movies.map((item) => item.substr(27));
+
     //step2 - fetch all of the movies from the from the swapi
     let dataMovie = await axios.all(movies.map((item) => axios.get(item)));
-    //step 3 - remove all of the information except for the data from the array
+
+    //step 3 - remove all of the information except for necessary the data from the array
     dataMovie = dataMovie.map(({ data, ...rest }) => data);
     dataMovie = dataMovie.map(
       ({
@@ -40,11 +41,35 @@ router.get("/:id", async (req, res) => {
       }) => rest
     );
     console.log(dataMovie);
+    //CREATE ARRAY OF INDEXES OF MOVIES AND DATA TO PAS--------------------------------------------------STARSHIPS
+    let starships = hero.starships;
+    //step1 - leave numbers only - to pass to it to the page.
+    const starshipNumArr = starships.map((item) => item.substr(31));
+    //step2 - fetch all of the movies from the from the swapi
+    let dataStarships = await axios.all(
+      starships.map((item) => axios.get(item))
+    );
+    dataStarships = dataStarships.map(({ data, ...rest }) => data);
+    dataStarships = dataStarships.map(
+      ({
+        url,
+        edited,
+        created,
+        films,
+        pilots,
+        MGLT,
+        cargo_capacity,
+        consumables,
+        ...rest
+      }) => rest
+    );
+    // console.log(dataStarships);
 
-    //to pass the data for species - sometimes species does not exist, return information about it.
+    //CREATE ARRAY OF SPECIES - WITH ONE ELEMENT ALWAYS (not always exists - cousing problems)-------------SPECIES
+    //step1 - leave numbers only - to pass it the page
     const species = hero.species;
     if (species[0]) {
-      let speciesId = species[0].substr(species.length - 4);
+      let speciesId = species[0].substr(29);
       //to pass the name of the species
       let speciesName = await axios.get(
         `https://swapi.dev/api/species/${speciesId}`
@@ -57,11 +82,16 @@ router.get("/:id", async (req, res) => {
         speciesId,
         speciesName,
         movieNumArr,
+        dataMovie,
+        dataStarships,
       });
     } else {
       res.render("hero/hero", {
         layout: "main",
         hero,
+        movieNumArr,
+        dataMovie,
+        dataStarships,
       });
     }
   } catch (error) {
