@@ -20,17 +20,21 @@
       <td class="text-warning">This hero has no species, feeling sorry for him!</td>
        {{/if}}
     </tr>
-    <tr>
+    {{!-- <tr>
       <td>Vehicle</td>
-      {{#if hero.vehicle}}
-      <td>{{hero.vehicle}}</td>
+      {{#if hero.vehicles}}
+      <td>
+      {{#each hero.vehicles}}
+      {{this}}
+      {{/each}}
+      </td>
       {{else}}
       <td class="text-danger">This hero has no vehicle, feeling sorry for him!</td>
       {{/if}}
     </tr>
-    <tr>
+    <tr> --}}
       <td>Starships</td>
-      <td>{{hero.name}}</td>
+      <td>{{hero.starships}}</td>
     </tr>
     <tr>
       <td>Planets</td>
