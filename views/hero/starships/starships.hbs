@@ -1,0 +1,28 @@
+{{#if user}}
+<p class="text-info">This is one og the starships your hero used to fly tab, {{user.email}}</p>
+<table class="table text-white letter-edges">
+  <thead>
+    <tr>
+      <th scope="col">Position</th>
+      <th scope="col">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Starship name</td>
+      <td>{{starship.name}}</td>
+    </tr>
+    <tr>
+      <td>Starship model</td>
+      <td>{{starship.model}}</td>
+    </tr>
+    <tr>
+      <td>Price</td>
+      <td>{{starship.cost_in_credits}}</td>
+    </tr>
+  
+    </tr>
+  </tbody>
+</table>
+
+{{/if}}

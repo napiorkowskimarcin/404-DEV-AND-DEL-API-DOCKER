@@ -1,0 +1,31 @@
+{{#if user}}
+<p class="text-info">This is a species of your hero tab, {{user.email}}</p>
+<table class="table text-white letter-edges">
+  <thead>
+    <tr>
+      <th scope="col">Position</th>
+      <th scope="col">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Planet name</td>
+      <td>{{planet.name}}</td>
+    </tr>
+    <tr>
+      <td>Planet terrain</td>
+      <td>{{planet.terrain}}</td>
+    </tr>
+    <tr>
+      <td>Planet population</td>
+      <td>{{planet.population}}</td>
+    </tr>
+    <tr>
+      <td>Climate</td>
+      <td>{{planet.climate}}</td>
+    </tr>
+     
+  </tbody>
+</table>
+
+{{/if}}

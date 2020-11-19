@@ -14,7 +14,7 @@ router.get("/:id", async (req, res) => {
     );
     //KEEP ONLY DATA FROM HERO:
     hero = hero.data;
-    //CREATE ARRAY OF INDEXES OF MOVIES AND DATA TO PASS----------------------------------------------------MOVIES
+    //CREATE ARRAY OF INDEXES OF MOVIES AND DATA TO PASS----------------------------------------------------MOVIES//ready
     //PASSING MOVIES FOR THE HERO.HBS
     let movies = hero.films;
 
@@ -40,11 +40,14 @@ router.get("/:id", async (req, res) => {
         ...rest
       }) => rest
     );
-    console.log(dataMovie);
-    //CREATE ARRAY OF INDEXES OF MOVIES AND DATA TO PAS--------------------------------------------------STARSHIPS
+
+    //console.log(dataMovie);
+
+    //CREATE ARRAY OF INDEXES OF MOVIES AND DATA TO PAS--------------------------------------------------STARSHIPS/ready
     let starships = hero.starships;
     //step1 - leave numbers only - to pass to it to the page.
     const starshipNumArr = starships.map((item) => item.substr(31));
+
     //step2 - fetch all of the movies from the from the swapi
     let dataStarships = await axios.all(
       starships.map((item) => axios.get(item))
@@ -52,7 +55,6 @@ router.get("/:id", async (req, res) => {
     dataStarships = dataStarships.map(({ data, ...rest }) => data);
     dataStarships = dataStarships.map(
       ({
-        url,
         edited,
         created,
         films,
@@ -63,9 +65,16 @@ router.get("/:id", async (req, res) => {
         ...rest
       }) => rest
     );
-    // console.log(dataStarships);
 
-    //CREATE ARRAY OF SPECIES - WITH ONE ELEMENT ALWAYS (not always exists - cousing problems)-------------SPECIES
+    //CREATE HOMEWORLD NAME TO PASS----------------------------------------------------------------------------PLANETS/ready
+    let homeworld = hero.homeworld;
+    // console.log(homeworld);
+    //step1 - leave numbers only - to pass to it to the page.
+
+    let planetName = await axios.get(`${hero.homeworld}`);
+    planetName = planetName.data;
+
+    //CREATE ARRAY OF SPECIES - WITH ONE ELEMENT ALWAYS (not always exists - cousing problems)-------------SPECIES/ready
     //step1 - leave numbers only - to pass it the page
     const species = hero.species;
     if (species[0]) {
@@ -84,6 +93,7 @@ router.get("/:id", async (req, res) => {
         movieNumArr,
         dataMovie,
         dataStarships,
+        planetName,
       });
     } else {
       res.render("hero/hero", {
@@ -92,6 +102,7 @@ router.get("/:id", async (req, res) => {
         movieNumArr,
         dataMovie,
         dataStarships,
+        planetName,
       });
     }
   } catch (error) {

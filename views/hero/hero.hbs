@@ -36,19 +36,19 @@
       <td>Starships</td>
       <td>
         {{#each dataStarships}}
-        <a href="#" class="text-white">{{this.model}}</a>
+        <a href="/starships/{{shortUrl this.url}}" class="text-white">{{this.model}}</a>
         {{/each}}
       </td>
     </tr>
     <tr>
       <td>Planets</td>
-      <td>{{hero.homeworld}}</td>
+      <td><a href="/planet/{{shortUrl2 planetName.url}}" class="text-white">{{planetName.name}}</a> </td>
     </tr>
     <tr>
       <td>Movies</td>
       <td>
         {{#each dataMovie}}
-        <a href="#" class="text-white">{{this.title}}</a>
+        <a href="/movies/{{this.episode_id}}" class="text-white">{{this.title}}</a>
         {{/each}}
 
       </td>

@@ -46,7 +46,17 @@ const hbs = exphbs.create({
   defaultLayout: "main",
   extname: ".hbs",
   handlebars: allowInsecurePrototypeAccess(Handlebars),
+  //create helper
+  helpers: {
+    shortUrl: function (item) {
+      return item.substr(31);
+    },
+    shortUrl2: function (item) {
+      return item.substr(29);
+    },
+  },
 });
+
 app.engine(".hbs", hbs.engine);
 app.set("view engine", ".hbs");
 
@@ -71,6 +81,9 @@ app.use((req, res, next) => {
 app.use("/user", require("./routes/user"));
 app.use("/hero", require("./routes/hero"));
 app.use("/species", require("./routes/species"));
+app.use("/movies", require("./routes/movies"));
+app.use("/starships", require("./routes/starships"));
+app.use("/planet", require("./routes/planet"));
 app.use("/", require("./routes/index"));
 
 //start listening
