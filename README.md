@@ -15,6 +15,7 @@
 ## What is left:
 
 - ...started on passport JWT
+- ...is Authenticated!
 - move mongokey to .env
 - check TypeScript and Docker
 - rearrange to API
