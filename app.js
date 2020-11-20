@@ -10,7 +10,8 @@ const passport = require("passport");
 //flash and session for passport
 const flash = require("express-flash");
 const session = require("express-session");
-
+//load redis
+const client = require("./config/redis");
 //set a port
 const PORT = process.env.PORT || 3000;
 
