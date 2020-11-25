@@ -7,22 +7,20 @@
 ## Finished:
 
 - NodeJS/ Express to start application and load necessary modules.
-- Handlebars/Bootstrap to create views
+- Pure API
 - MongoDB/Mongoose to create accounts and store their random id
-- passport to log users
-- redis to cache some data.
+- Passport to log users
+- Authenticate the routes
+- Redis to cache some data.
 
 ## What is left:
 
 - ...started on passport JWT
-- ...is Authenticated!
 - move mongokey to .env
 - check TypeScript and Docker
-- rearrange to API
 - create a SWAGGER doc
 
 ## What I do not like:
 
-- redis is slower than axios! already filtered storing data, to check why it is not improving the app.
 - password (backend) verification does not exist yet
 -
