@@ -4,8 +4,46 @@ const router = express.Router();
 const client = require("../config/redis");
 const expirationTime = 60 * 60 * 24;
 
-//get the hero information - using req.params to pass the randomised Id and axios to get data from database.
+function cacheHero(req, res, next) {
+  const userId = req.user.charId;
+  client.get(userId, (err, data) => {
+    if (err) throw err;
+    if (data !== null) {
+      req.hero = JSON.parse(data);
+      req.cached = true;
+      next();
+    } else {
+      req.hero = null;
+      req.cached = false;
+      next();
+    }
+  });
+}
+router.get("/", cacheHero, async (req, res) => {
+  try {
+    if (!req.hero) {
+      console.log("axios hero");
+      let userId = req.user.charId;
+      hero = await axios.get(`https://swapi.dev/api/people/${userId}/`);
+      //KEEP ONLY DATA FROM HERO:
+      hero = hero.data;
 
+      //SET HERO TO REDIS
+      client.setex(userId, expirationTime, JSON.stringify(hero));
+    } else {
+      console.log("cached hero!");
+      hero = req.hero;
+    }
+    species = await hero.species;
+
+    res.send(`Species that you have access for:
+    ${species}`);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+//get species that you have access for
 async function getSpecies(req, res) {
   try {
     if (!req.species) {

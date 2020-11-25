@@ -38,10 +38,10 @@ router.post(
 
 //sign in responses
 router.get("/", async (req, res) => {
-  const user = await User.find();
-  const userNames = user.map((element) => element.email);
+  let user = await User.find();
+  user.map((element) => (element.password = "it is a secret!"));
   const message = `please sign in. There is a list of valid users:
-  ${userNames}`;
+  ${user}`;
   res.send(message);
 });
 
