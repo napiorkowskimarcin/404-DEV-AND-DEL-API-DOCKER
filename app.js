@@ -1,7 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Handlebars = require("handlebars");
-const exphbs = require("express-handlebars");
 const morgan = require("morgan");
 const config = require("./config/config");
 const bodyParser = require("body-parser");
@@ -28,38 +26,17 @@ db.once("open", function () {
   console.log("Connected to the database");
 });
 
+//create check if authenticated
+const ensureAuthentication = (req, res, next) => {
+  if (req.isAuthenticated()) next();
+  else res.send("you need to be logged in 25.11.2020");
+};
+
 const app = express();
 
 //allow bodyParser to recognize a body
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-//load public folder to front-end
-app.use(express.static(path.join(__dirname, "public")));
-
-//load and recognize body (own property issue)
-const {
-  allowInsecurePrototypeAccess,
-} = require("@handlebars/allow-prototype-access");
-//load handlebars and set .handlebars to .hbs
-
-const hbs = exphbs.create({
-  defaultLayout: "main",
-  extname: ".hbs",
-  handlebars: allowInsecurePrototypeAccess(Handlebars),
-  //create helper
-  helpers: {
-    shortUrl: function (item) {
-      return item.substr(31);
-    },
-    shortUrl2: function (item) {
-      return item.substr(29);
-    },
-  },
-});
-
-app.engine(".hbs", hbs.engine);
-app.set("view engine", ".hbs");
 
 //login request
 app.use(morgan("dev"));
@@ -79,13 +56,14 @@ app.use((req, res, next) => {
 });
 
 //routes
-app.use("/user", require("./routes/user"));
-app.use("/hero", require("./routes/hero"));
-app.use("/species", require("./routes/species"));
-app.use("/movies", require("./routes/movies"));
-app.use("/starships", require("./routes/starships"));
-app.use("/planet", require("./routes/planet"));
-app.use("/", require("./routes/index"));
+app.use("/api/user", require("./routes/user"));
+app.use("/api/hero", ensureAuthentication, require("./routes/hero"));
+app.use("/api/species", ensureAuthentication, require("./routes/species"));
+app.use("/api/movies", ensureAuthentication, require("./routes/movies"));
+app.use("/api/starships", ensureAuthentication, require("./routes/starships"));
+app.use("/api/planet", ensureAuthentication, require("./routes/planet"));
+app.use("/api/logout", ensureAuthentication, require("./routes/logout"));
+app.use("/api", require("./routes/index"));
 
 //start listening
 app.listen(PORT, () => console.log(`Server has started on: ${PORT}`));

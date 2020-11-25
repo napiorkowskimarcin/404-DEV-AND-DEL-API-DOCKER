@@ -21,10 +21,7 @@ async function getSpecies(req, res) {
       species = req.species;
     }
 
-    res.render("hero/species/species", {
-      layout: "main",
-      species,
-    });
+    res.send(species);
   } catch (error) {
     console.error(error);
   }

@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  const message =
-    "Hello. This is an API to get info about a random StarWars hero";
+  req.logOut();
+  const message = "you are logged out";
   res.send(message);
 });
 

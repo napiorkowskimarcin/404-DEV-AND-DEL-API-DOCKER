@@ -12,7 +12,7 @@ async function getStarship(req, res) {
       console.log("axios starship");
       let starshipId = `Starship${req.params.id}`;
       starship = await axios.get(
-        `https://swapi.dev/api/starships/${req.params.id}`
+        `https://swapi.dev/api/starships/${req.params.id}/`
       );
       starship = starship.data;
       client.setex(starshipId, expirationTime, JSON.stringify(starship));
@@ -20,12 +20,7 @@ async function getStarship(req, res) {
       console.log("cached starship!");
       starship = req.starship;
     }
-
-    console.log(starship);
-    res.render("hero/starships/starships", {
-      layout: "main",
-      starship,
-    });
+    res.send(starship);
   } catch (error) {
     console.error(error);
   }

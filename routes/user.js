@@ -9,19 +9,6 @@ const passport = require("passport");
 const initializePassport = require("../config/passport");
 initializePassport(passport);
 
-//load pages - sign in and sign up
-router.get("/signin", (req, res) => {
-  res.render("users/signin", {
-    layout: "main",
-  });
-});
-
-router.get("/signup", (req, res) => {
-  res.render("users/signup", {
-    layout: "main",
-  });
-});
-
 //create account
 router.post("/signup", async (req, res) => {
   try {
@@ -33,12 +20,9 @@ router.post("/signup", async (req, res) => {
       charId: charId,
     };
     new User(user).save();
-    res.redirect("/user/signin");
+    res.send(`saved as: ${user.email}`);
   } catch (error) {
     console.error(error);
-    res.render("users/signup", {
-      layout: "main",
-    });
   }
 });
 
@@ -46,10 +30,19 @@ router.post("/signup", async (req, res) => {
 router.post(
   "/signin",
   passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/user/signin",
+    successRedirect: "/api/",
+    failureRedirect: "/api/user/signin/",
     failureFlash: true,
   })
 );
+
+//sign in responses
+router.get("/", async (req, res) => {
+  const user = await User.find();
+  const userNames = user.map((element) => element.email);
+  const message = `please sign in. There is a list of valid users:
+  ${userNames}`;
+  res.send(message);
+});
 
 module.exports = router;

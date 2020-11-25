@@ -9,22 +9,18 @@ const expirationTime = 60 * 60 * 24;
 async function getPlanet(req, res) {
   try {
     if (!req.planet) {
-      console.log("axios planet");
+      // console.log("axios planet");
       let planetId = `Planet${req.params.id}`;
       planet = await axios.get(
         `https://swapi.dev/api/planets/${req.params.id}/`
       );
-
       planet = planet.data;
       client.setex(planetId, expirationTime, JSON.stringify(planet));
     } else {
-      console.log("cached planet!");
+      //console.log("cached planet!");
       planet = req.planet;
     }
-    res.render("hero/planet/planet", {
-      layout: "main",
-      planet,
-    });
+    res.send(planet);
   } catch (error) {
     console.error(error);
   }

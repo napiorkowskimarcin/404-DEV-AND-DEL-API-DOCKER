@@ -11,10 +11,7 @@ router.get("/:id", async (req, res) => {
     );
     movies = movies.data;
 
-    res.render("hero/movies/movie", {
-      layout: "main",
-      movies,
-    });
+    res.send(movies);
   } catch (error) {
     console.error(error);
   }
