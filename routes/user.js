@@ -44,10 +44,13 @@ router.post("/signup", async (req, res) => {
 router.post(
   "/signin",
   passport.authenticate("local", {
-    successRedirect: "/api/",
     failureRedirect: "/api/user/signin/",
     failureFlash: true,
-  })
+  }),
+  async (req, res) => {
+    console.log(req.body);
+    res.status(200).send("ok");
+  }
 );
 
 //GET
