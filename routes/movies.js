@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 const client = require("../config/redis");
-const expirationTime = 60 * 60 * 24;
+const maxAge = require("../config/maxAge");
 
 function cacheHero(req, res, next) {
   const userId = req.user.charId;
@@ -31,7 +31,7 @@ router.get("/", cacheHero, async (req, res) => {
       hero = hero.data;
 
       //SET HERO TO REDIS
-      client.setex(userId, expirationTime, JSON.stringify(hero));
+      client.setex(userId, maxAge, JSON.stringify(hero));
     } else {
       console.log("cached hero!");
       hero = req.hero;

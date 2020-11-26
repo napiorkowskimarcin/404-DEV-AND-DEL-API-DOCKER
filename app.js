@@ -1,3 +1,7 @@
+const dotenv = require("dotenv");
+dotenv.config({ path: ".env" });
+
+//import main packages
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -5,6 +9,7 @@ const config = require("./config/config");
 const bodyParser = require("body-parser");
 const path = require("path");
 const passport = require("passport");
+
 //flash and session for passport
 const flash = require("express-flash");
 const session = require("express-session");

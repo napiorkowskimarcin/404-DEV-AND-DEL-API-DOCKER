@@ -10,9 +10,9 @@
   "author": "mn",
   "license": "ISC",
   "dependencies": {
-    "@handlebars/allow-prototype-access": "^1.0.3",
     "axios": "^0.21.0",
     "bcrypt": "^5.0.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",

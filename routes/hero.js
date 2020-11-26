@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const router = express.Router();
 const client = require("../config/redis");
-const expirationTime = 60 * 60 * 24;
+const maxAge = require("../config/maxAge");
 //get the hero information - using req.params to pass the randomised Id and axios to get data from database.
 //get species name and page
 //get movies names
@@ -17,7 +17,7 @@ async function getData(req, res) {
       //KEEP ONLY DATA FROM HERO:
       hero = hero.data;
       //SET HERO TO REDIS
-      client.setex(userId, expirationTime, JSON.stringify(hero));
+      client.setex(userId, maxAge, JSON.stringify(hero));
     } else {
       console.log("cached hero!");
       hero = req.hero;
