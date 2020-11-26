@@ -3,17 +3,13 @@ const router = express.Router();
 const { model } = require("mongoose");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
-const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const maxAge = require("../config/maxAge");
 
-//passport - initialize
-const initializePassport = require("../config/passport");
-initializePassport(passport);
-
 //CREATE TOKEN
-const createToken = (id) => {
-  return jwt.sign({ id }, "secret to be hidden", {
+const createToken = (user) => {
+  const payload = { charId: user.charId };
+  return jwt.sign(payload, "secret to be hidden", {
     expiresIn: maxAge,
   });
 };
@@ -41,17 +37,26 @@ router.post("/signup", async (req, res) => {
 
 //POST
 //LOG IN TO THE APP
-router.post(
-  "/signin",
-  passport.authenticate("local", {
-    failureRedirect: "/api/user/signin/",
-    failureFlash: true,
-  }),
-  async (req, res) => {
-    console.log(req.body);
-    res.status(200).send("ok");
+router.post("/signin", async (req, res) => {
+  const { password, email } = req.body;
+  let user = await User.findOne({ email: email });
+  if (!user) {
+    res.send("no user with that name- please create an accout");
   }
-);
+
+  try {
+    if (await bcrypt.compare(password, user.password)) {
+      const accessToken = await createToken(user);
+      console.log({ accessToken });
+      console.log(`user: ${user}`);
+      res.send({ user, accessToken });
+    } else {
+      res.send("password incorrect");
+    }
+  } catch (error) {
+    return done(error);
+  }
+});
 
 //GET
 //GET A LIST OF USERS THAT YOU CAN USE

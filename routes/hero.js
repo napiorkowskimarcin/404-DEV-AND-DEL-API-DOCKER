@@ -22,8 +22,8 @@ async function getData(req, res) {
       console.log("cached hero!");
       hero = req.hero;
     }
-
-    res.send(hero);
+    let charId = req.charId;
+    res.send({ ...hero, charId });
   } catch (error) {
     console.error(error);
   }
