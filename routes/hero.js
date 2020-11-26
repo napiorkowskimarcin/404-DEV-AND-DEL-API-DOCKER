@@ -9,10 +9,14 @@ const maxAge = require("../config/maxAge");
 //get planets pages
 
 async function getData(req, res) {
+  let userId = req.params.id;
+  if (userId != req.charId) {
+    return res.send(`You are allowed to see a hare no${req.charId}`);
+  }
   try {
     if (!req.hero) {
       console.log("axios hero");
-      let userId = req.params.id;
+
       hero = await axios.get(`https://swapi.dev/api/people/${userId}/`);
       //KEEP ONLY DATA FROM HERO:
       hero = hero.data;
