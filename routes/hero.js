@@ -4,18 +4,17 @@ const router = express.Router();
 const client = require("../config/redis");
 const maxAge = require("../config/maxAge");
 //get the hero information - using req.params to pass the randomised Id and axios to get data from database.
-//get species name and page
-//get movies names
-//get planets pages
 
+//FUNCTION TO USE IN ROUTE /HERO/:ID
 async function getData(req, res) {
   let userId = req.params.id;
+  //CHECK IF USER IS AUTHORIZED TO SEE A HERO WITH THAT ID. COMPARE REQ.PARAMS WITH CHAR ID FROM TOKEN
   if (userId != req.charId) {
-    return res.send(`You are allowed to see a hare no${req.charId}`);
+    return res.send(`You are allowed to see a hero with an Id: ${req.charId}`);
   }
   try {
     if (!req.hero) {
-      console.log("axios hero");
+      //console.log("axios hero");
 
       hero = await axios.get(`https://swapi.dev/api/people/${userId}/`);
       //KEEP ONLY DATA FROM HERO:
@@ -23,7 +22,7 @@ async function getData(req, res) {
       //SET HERO TO REDIS
       client.setex(userId, maxAge, JSON.stringify(hero));
     } else {
-      console.log("cached hero!");
+      //console.log("cached hero!");
       hero = req.hero;
     }
     let charId = req.charId;
@@ -32,7 +31,8 @@ async function getData(req, res) {
     console.error(error);
   }
 }
-//cache middleware
+
+//CACHING FOR ROUTE /HERO/:ID
 function cache(req, res, next) {
   const userId = req.params.id;
   client.get(userId, (err, data) => {
@@ -49,6 +49,9 @@ function cache(req, res, next) {
   });
 }
 
+//GET
+//ROUTE /HERO/:ID
+//HERO - GET INFO FOR A SELECTED HERO
 router.get("/:id", cache, getData);
 
 module.exports = router;
