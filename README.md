@@ -1,6 +1,6 @@
 # HOMEWORK DEV AND DELIVER
 
-## TASK WAS TO CREATE AN API FOR DOCKER.
+## TASK WAS TO CREATE AN API AND DOCERIZE IT.
 
 ## Finished:
 
@@ -12,7 +12,13 @@
 - Redis to cache some data
 - Swagger to prepare the docs
 
-## What is left:
+## NOTES : TO RUN APP STRAIGHT FROM VISUAL STUDIO CODE GO TO CONFIG/REDIS.JS AND UNCOMMENT/COMMENT DESCRIBED PARTS
 
-- docker
-- create a SWAGGER doc
+## For the first run you can use an user:
+
+{
+"email" : "marcin3@marcin",
+"password": "marcin0@marcin"
+}
+
+## After beeing logged in, copy access token to be able to receive data.
