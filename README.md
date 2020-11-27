@@ -16,7 +16,7 @@
 
 ## For the first run you can use an user:
 
-# Remeber to use http://localhost:3000/api-docs/
+### Remeber to use http://localhost:3000/api-docs/
 
 {
 "email" : "marcin3@marcin",
