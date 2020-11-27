@@ -1,6 +1,6 @@
 # HOMEWORK DEV AND DELIVER
 
-## TASK WAS TO CREATE AN API AND DOCERIZE IT.
+## TASK WAS TO CREATE AN API AND DOCERIZE IT
 
 ## Finished:
 
@@ -22,3 +22,7 @@
 }
 
 ## After beeing logged in, copy access token to be able to receive data.
+
+## I alse created an other version of app, with view engine. Maybe you want to see it?
+
+https://github.com/napiorkowskimarcin/402-DEVANDDEL
