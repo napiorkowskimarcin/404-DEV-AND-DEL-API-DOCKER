@@ -14,8 +14,20 @@ const createToken = (user) => {
   });
 };
 
-//POST
-//CREATE AN ACCOUNT
+/**
+ * @swagger
+/api/user/signup:
+*    post:
+*      summary: "Create you own user"
+*      description: "You will get a random ID"
+*      parameters:
+*      - name: "body"
+*        in: "body"
+*        required: true
+*      responses:
+*        "201":
+*          description: "successful operation"
+*/
 router.post("/signup", async (req, res) => {
   let { email, password } = req.body;
 
@@ -35,13 +47,25 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-//POST
-//LOG IN TO THE APP
+/**
+ * @swagger
+/api/user/signin:
+*    post:
+*      summary: "Log with your own user"
+*      description: "After being loged in - copy `accessToken`! use it with Authorization, as: `bearer  accessToken`"
+*      parameters:
+*      - name: "body"
+*        in: "body"
+*        required: true
+*      responses:
+*        "200":
+*          description: "successful operation"
+*/
 router.post("/signin", async (req, res) => {
   const { password, email } = req.body;
   let user = await User.findOne({ email: email });
   if (!user) {
-    res.send("no user with that name- please create an accout");
+    res.status(200).send("no user with that name- please create an accout");
   }
 
   try {
@@ -58,14 +82,21 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-//GET
-//GET A LIST OF USERS THAT YOU CAN USE
+/**
+ * @swagger
+/api/user/:
+*    get:
+*      summary: "See the list of valid users!"
+*      responses:
+*        "200":
+*          description: "successful operation"
+*/
 router.get("/", async (req, res) => {
   let user = await User.find();
   user.map((element) => (element.password = "it is a secret!"));
   const message = `please sign in. There is a list of valid users:
   ${user}`;
-  res.send(message);
+  res.statu(200).send(message);
 });
 
 module.exports = router;

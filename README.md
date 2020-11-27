@@ -7,18 +7,12 @@
 - NodeJS/ Express to start application and load necessary modules.
 - Pure API
 - MongoDB/Mongoose to create accounts and store their random id
-- Passport to log users
-- Authenticate the routes
-- Redis to cache some data.
+- JWT for authenticate and authorize the routes
+- Authenticate and authorize the routes with JSON Web Token
+- Redis to cache some data
+- Swagger to prepare the docs
 
 ## What is left:
 
-- ...started on passport JWT
-- move mongokey to .env
-- check TypeScript and Docker
+- docker
 - create a SWAGGER doc
-
-## What I do not like:
-
-- password (backend) verification does not exist yet
--

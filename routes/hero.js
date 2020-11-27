@@ -49,9 +49,29 @@ function cache(req, res, next) {
   });
 }
 
-//GET
-//ROUTE /HERO/:ID
-//HERO - GET INFO FOR A SELECTED HERO
+/**
+ * @swagger
+/api/hero/{Id}:
+*    get:
+*      summary: "Find hero by ID"
+*      description: "Returns a single hero"
+*      produces:
+*      - "application/xml"
+*      - "application/json"
+*      parameters:
+*      - name: "Id"
+*        in: "path"
+*        description: "ID of hero to return"
+*        required: true
+*        type: "integer"
+*      - name: "Authorization"
+*        in: "header"
+*        description: "bearer with accessToken to place"
+*        required: true
+*      responses:
+*        "200":
+*          description: "successful operation"
+*/
 router.get("/:id", cache, getData);
 
 module.exports = router;

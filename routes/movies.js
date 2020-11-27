@@ -21,9 +21,24 @@ function cacheHero(req, res, next) {
   });
 }
 
-//GET
-//ROUTE /MOVIE/
-//GET INFORMATION WHAT MOVIES CAN DOES USER HAS AN ACCESS FOR
+/**
+ * @swagger
+/api/movies/:
+*    get:
+*      summary: "Find movies attached to hero"
+*      description: "Returns a list of movies"
+*      produces:
+*      - "application/xml"
+*      - "application/json"
+*      parameters:
+*      - name: "Authorization"
+*        in: "header"
+*        description: "bearer with accessToken to place"
+*        required: true
+*      responses:
+*        "200":
+*          description: "successful operation"
+*/
 router.get("/", cacheHero, async (req, res) => {
   console.log("loaded movies function");
   try {
@@ -61,14 +76,34 @@ const moviesAuth = async (req, res, next) => {
   next();
 };
 
-//GET
-//ROUTE /MOVIES/:ID
-//GET SPECIFIC MOVIE - WITH AN ID AS A REQ.PARAMS
+/**
+ * @swagger
+/api/movies/{Id}:
+*    get:
+*      summary: "Find movie by ID"
+*      description: "Returns a single movie"
+*      produces:
+*      - "application/xml"
+*      - "application/json"
+*      parameters:
+*      - name: "Id"
+*        in: "path"
+*        description: "ID of movie to return"
+*        required: true
+*        type: "integer"
+*      - name: "Authorization"
+*        in: "header"
+*        description: "bearer with accessToken to place"
+*        required: true
+*      responses:
+*        "200":
+*          description: "successful operation"
+*/
 router.get("/:id", moviesAuth, async (req, res) => {
   let allowedMovies = req.allowedMovies;
   let authorizationToRoute = allowedMovies.includes(req.params.id);
   if (!authorizationToRoute) {
-    res.send(
+    return res.send(
       `You are not allowed to see this movie. You can only check that ids: ${allowedMovies}`
     );
   }

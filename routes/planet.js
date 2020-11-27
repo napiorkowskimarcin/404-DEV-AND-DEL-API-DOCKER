@@ -23,9 +23,24 @@ function cacheHero(req, res, next) {
   });
 }
 
-//GET
-//ROUTE /PLANET/
-//GET INFO WHAT PLANET DOES USER HAVE AN ACCESS FOR
+/**
+ * @swagger
+/api/planet/:
+*    get:
+*      summary: "Find planet attached to hero"
+*      description: "Returns a list of planet"
+*      produces:
+*      - "application/xml"
+*      - "application/json"
+*      parameters:
+*      - name: "Authorization"
+*        in: "header"
+*        description: "bearer with accessToken to place"
+*        required: true
+*      responses:
+*        "200":
+*          description: "successful operation"
+*/
 router.get("/", cacheHero, async (req, res) => {
   try {
     if (!req.hero) {
@@ -58,7 +73,7 @@ async function getPlanet(req, res) {
     let allowedPlanet = req.allowedPlanet;
     let authorizationToRoute = allowedPlanet === req.params.id;
     if (!authorizationToRoute) {
-      res.send(
+      return res.send(
         `You are not allowed to see this planet. You can only check that ids: ${allowedPlanet}`
       );
     }
@@ -107,6 +122,29 @@ const planetAuth = async (req, res, next) => {
   next();
 };
 
+/**
+ * @swagger
+/api/planet/{Id}:
+*    get:
+*      summary: "Find planet by ID"
+*      description: "Returns a single planet"
+*      produces:
+*      - "application/xml"
+*      - "application/json"
+*      parameters:
+*      - name: "Id"
+*        in: "path"
+*        description: "ID of planet to return"
+*        required: true
+*        type: "integer"
+*      - name: "Authorization"
+*        in: "header"
+*        description: "bearer with accessToken to place"
+*        required: true
+*      responses:
+*        "200":
+*          description: "successful operation"
+*/
 router.get("/:id", cache, planetAuth, getPlanet);
 
 module.exports = router;
