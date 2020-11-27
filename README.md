@@ -8,13 +8,15 @@
 - Pure API
 - MongoDB/Mongoose to create accounts and store their random id
 - JWT for authenticate and authorize the routes
-- Authenticate and authorize the routes with JSON Web Token
 - Redis to cache some data
 - Swagger to prepare the docs
+- Docker + docker-compose
 
 ## NOTES : TO RUN APP STRAIGHT FROM VISUAL STUDIO CODE GO TO CONFIG/REDIS.JS AND UNCOMMENT/COMMENT DESCRIBED PARTS
 
 ## For the first run you can use an user:
+
+# Remeber to use http://localhost:3000/api-docs/
 
 {
 "email" : "marcin3@marcin",
