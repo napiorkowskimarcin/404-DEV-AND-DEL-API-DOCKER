@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 dotenv.config({ path: ".env" });
 
-//import main packages
+//IMPORT MAIN PACKAGES
 const router = require("express").Router();
 const express = require("express");
 const mongoose = require("mongoose");
@@ -11,10 +11,10 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const jwt = require("jsonwebtoken");
 
-//load swagger
+//LOAD SWAGGER
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-//swagger setup
+//SWAGGER SETUP
 const swaggerOptions = {
   swaggerDefinition: {
     info: {
@@ -35,27 +35,26 @@ const swaggerOptions = {
 };
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-//load redis
+//LOAD REDIS
 const client = require("./config/redis");
 
-// STARRING AN APP
-//set a port
+//SET A PORT
 const PORT = process.env.PORT || 3000;
 
-//load mongoose
+//LOAD MONGOOSE
 mongoose.connect(config.db, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
 });
-//set a DB connection
+//SET A DB CONNECTION
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
   console.log("Connected to the database");
 });
 
-//create check if authenticated
+//CREATE CHECK IF AUTHENTICATION
 const ensureAuthentication = (req, res, next) => {
   try {
     const authorization = req.get("Authorization");
@@ -68,16 +67,17 @@ const ensureAuthentication = (req, res, next) => {
   }
 };
 
+//STARRING AN APP/
 const app = express();
 
-//allow bodyParser to recognize a body
+//ALLOW BODYPARSER TO RECOGNIZE A BODY
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//login request
+//LOGGER MIDDLEWARE
 app.use(morgan("dev"));
 
-//routes
+//ROUTES
 
 app.use("/api/user", require("./routes/user"));
 app.use("/api/hero", ensureAuthentication, require("./routes/hero"));
@@ -86,8 +86,8 @@ app.use("/api/movies", ensureAuthentication, require("./routes/movies"));
 app.use("/api/starships", ensureAuthentication, require("./routes/starships"));
 app.use("/api/planet", ensureAuthentication, require("./routes/planet"));
 app.use("/api", require("./routes/index"));
-//load swagger route
+//LOAD SWAGGER ROUTE
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-//start listening
+//START!
 app.listen(PORT, () => console.log(`Server has started on: ${PORT}`));
