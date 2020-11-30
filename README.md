@@ -23,8 +23,12 @@
 "password": "marcin0@marcin"
 }
 
-## After beeing logged in, copy access token to be able to receive data.
+### After beeing logged in, copy access token to be able to receive data.
 
-## I alse created an other version of app, with view engine. Maybe you want to see it?
+### I alse created an other version of app, with view engine. Maybe you want to see it?
 
 https://github.com/napiorkowskimarcin/402-DEVANDDEL
+
+### BTW I started to rewrite app in typescript. It will be loaded on github later on( unfortunately I have other stuff to do.)
+
+### Next part - I am goint to change REST to graphQL.
